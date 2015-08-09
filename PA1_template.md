@@ -41,24 +41,8 @@ Show any code that is needed to
 
 
 ```r
-setwd("C:/Users/xliu12/Dropbox/Coursera/Reproductive Research/data")
-```
-
-```
-## Error in setwd("C:/Users/xliu12/Dropbox/Coursera/Reproductive Research/data"): cannot change working directory
-```
-
-```r
+setwd("~/Dropbox/Coursera/Reproductive Research/data")
 act <- read.csv("activity.csv", header=T, stringsAsFactors = F)
-```
-
-```
-## Warning in file(file, "rt"): cannot open file 'activity.csv': No such file
-## or directory
-```
-
-```
-## Error in file(file, "rt"): cannot open the connection
 ```
 
 2. Process/transform the data (if necessary) into a format suitable for your analysis
@@ -74,10 +58,6 @@ For this part of the assignment, you can ignore the missing values in the datase
 sum_per_day <- aggregate(steps ~ date, data = act, sum, na.rm = T)
 ```
 
-```
-## Error in eval(expr, envir, enclos): object 'act' not found
-```
-
 2. If you do not understand the difference between a histogram and a barplot, research the difference between them. Make a histogram of the total number of steps taken each day
 
 
@@ -85,9 +65,7 @@ sum_per_day <- aggregate(steps ~ date, data = act, sum, na.rm = T)
 hist(sum_per_day$steps, col = "blue", main = "Total number of steps taken each day")
 ```
 
-```
-## Error in hist(sum_per_day$steps, col = "blue", main = "Total number of steps taken each day"): object 'sum_per_day' not found
-```
+![plot of chunk unnamed-chunk-3](figure/unnamed-chunk-3-1.png) 
 
 3. Calculate and report the mean and median of the total number of steps taken per day
 
@@ -97,7 +75,7 @@ mean(sum_per_day$steps)
 ```
 
 ```
-## Error in mean(sum_per_day$steps): object 'sum_per_day' not found
+## [1] 10766.19
 ```
 
 ```r
@@ -105,7 +83,7 @@ median(sum_per_day$steps)
 ```
 
 ```
-## Error in median(sum_per_day$steps): object 'sum_per_day' not found
+## [1] 10765
 ```
 
 ###What is the average daily activity pattern?
@@ -115,18 +93,11 @@ median(sum_per_day$steps)
 
 ```r
 mean_per_interval <- aggregate(steps ~ interval, data = act, mean, na.rm = T)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'act' not found
-```
-
-```r
 names(mean_per_interval)
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'mean_per_interval' not found
+## [1] "interval" "steps"
 ```
 
 ```r
@@ -134,9 +105,7 @@ plot(mean_per_interval$interval, mean_per_interval$steps, type = "l", main = "Ti
       xlab = "5-minute interval", ylab = "average number of steps taken")
 ```
 
-```
-## Error in plot(mean_per_interval$interval, mean_per_interval$steps, type = "l", : object 'mean_per_interval' not found
-```
+![plot of chunk unnamed-chunk-5](figure/unnamed-chunk-5-1.png) 
 
 2. Which 5-minute interval, on average across all the days in the dataset, contains the maximum number of steps?
 
@@ -146,7 +115,8 @@ mean_per_interval[which.max(mean_per_interval$steps), ]
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'mean_per_interval' not found
+##     interval    steps
+## 104      835 206.1698
 ```
 
 ###Imputing missing values
@@ -161,7 +131,7 @@ sum(is.na(act$steps))
 ```
 
 ```
-## Error in eval(expr, envir, enclos): object 'act' not found
+## [1] 2304
 ```
 
 2. Devise a strategy for filling in all of the missing values in the dataset. The strategy does not need to be sophisticated. For example, you could use the mean/median for that day, or the mean for that 5-minute interval, etc.
@@ -183,18 +153,7 @@ random.imp <- function (a){
 
 ```r
 act_imp <- act
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'act' not found
-```
-
-```r
 act_imp$step_imp <- random.imp(act$steps)
-```
-
-```
-## Error in random.imp(act$steps): object 'act' not found
 ```
 
 4. Make a histogram of the total number of steps taken each day and Calculate and report the mean and median total number of steps taken per day. Do these values differ from the estimates from the first part of the assignment? What is the impact of imputing missing data on the estimates of the total daily number of steps?
@@ -202,26 +161,17 @@ act_imp$step_imp <- random.imp(act$steps)
 
 ```r
 sum_per_day_imp <- aggregate(step_imp ~ date, data = act_imp, sum, na.rm = T)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'act_imp' not found
-```
-
-```r
 hist(sum_per_day_imp$step_imp, col = "blue", main = "Total number of steps taken each day (imputed)")
 ```
 
-```
-## Error in hist(sum_per_day_imp$step_imp, col = "blue", main = "Total number of steps taken each day (imputed)"): object 'sum_per_day_imp' not found
-```
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10-1.png) 
 
 ```r
 mean(sum_per_day_imp$step_imp)
 ```
 
 ```
-## Error in mean(sum_per_day_imp$step_imp): object 'sum_per_day_imp' not found
+## [1] 10698.18
 ```
 
 ```r
@@ -229,7 +179,7 @@ median(sum_per_day_imp$step_imp)
 ```
 
 ```
-## Error in median(sum_per_day_imp$step_imp): object 'sum_per_day_imp' not found
+## [1] 10571
 ```
 
 Yes, these values differ from the estimateds from the first part of the assignment. The imputed 
@@ -245,43 +195,16 @@ For this part the weekdays() function may be of some help here. Use the dataset 
 act_imp$day <- weekdays(as.Date(act_imp$date, '%Y-%m-%d'))
 ```
 
-```
-## Error in as.Date(act_imp$date, "%Y-%m-%d"): object 'act_imp' not found
-```
-
 2. Make a panel plot containing a time series plot (i.e. type = "l") of the 5-minute interval (x-axis) and the average number of steps taken, averaged across all weekday days or weekend days (y-axis). See the README file in the GitHub repository to see an example of what this plot should look like using simulated data.
 
 
 ```r
 library(ggplot2)
 act_imp$weekday <- as.factor(ifelse(act_imp$day == 'Sunday' | act_imp$day == 'Saturday', 'weekend', 'weekday'))
-```
-
-```
-## Error in ifelse(act_imp$day == "Sunday" | act_imp$day == "Saturday", "weekend", : object 'act_imp' not found
-```
-
-```r
 mean_per_interval_imp <- aggregate(steps ~ interval + weekday, data = act_imp, mean, na.rm = T)
-```
-
-```
-## Error in eval(expr, envir, enclos): object 'act_imp' not found
-```
-
-```r
 g <- qplot(interval, steps, data = mean_per_interval_imp, type = "l", geom = c("line")) 
-```
-
-```
-## Error in ggplot(data, aesthetics, environment = env): object 'mean_per_interval_imp' not found
-```
-
-```r
 g + labs(title = "") + labs(x = "Interval") + labs(y = "Number of steps") + facet_wrap(~ weekday, ncol = 1)
 ```
 
-```
-## Error in eval(expr, envir, enclos): object 'g' not found
-```
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12-1.png) 
 
